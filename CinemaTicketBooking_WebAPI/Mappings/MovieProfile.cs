@@ -14,8 +14,6 @@ namespace CinemaTicketBooking_WebAPI.Mapping
 
             // ---- Request DTOs → Entity ----
             CreateMap<CreateMovieDto, Movie>()
-                .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.Shows, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow))
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow));
 

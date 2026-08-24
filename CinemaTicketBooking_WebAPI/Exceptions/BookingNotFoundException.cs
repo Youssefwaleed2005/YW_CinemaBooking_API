@@ -1,5 +1,4 @@
-﻿// Exceptions/BookingNotFoundException.cs
-namespace CinemaTicketBooking_WebAPI.Exceptions
+﻿namespace CinemaTicketBooking_WebAPI.Exceptions
 {
     public class BookingNotFoundException : Exception
     {
