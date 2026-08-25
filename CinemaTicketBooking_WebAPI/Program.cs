@@ -8,12 +8,22 @@ using CinemaTicketBooking_WebAPI.Repos.Interfaces;
 using CinemaTicketBooking_WebAPI.Services;
 using CinemaTicketBooking_WebAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddScoped<IMoviesRepo, MoviesRepo>();
+builder.Services.AddScoped<IBookingRepo, BookingRepo>();
+builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
+builder.Services.AddScoped<IAuditoriumRepo, AuditoriumRepo>();
+builder.Services.AddScoped<IShowTimeRepo, ShowTimeRepo>();
+
+
 builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IAuditoriumService,AuditoriumService>();
+builder.Services.AddScoped<IShowTimeService, ShowTimeService>();
 
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -25,7 +35,11 @@ builder.Services.AddDbContext<AppDBContext>(options =>
 
 builder.Services.AddAutoMapper(cfg =>
 { 
-cfg.AddProfile<MovieProfile>();
+    cfg.AddProfile<MovieProfile>();
+    cfg.AddProfile<BookingProfile>();
+    cfg.AddProfile<CustomerProfile>();
+    cfg.AddProfile<AuditoriumProfile>();
+    cfg.AddProfile<ShowTimeProfile>();
 
 
 });
@@ -42,7 +56,9 @@ builder.Services.AddApiVersioning(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 var app = builder.Build();
 

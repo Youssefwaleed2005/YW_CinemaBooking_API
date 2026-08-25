@@ -47,6 +47,10 @@ namespace CinemaTicketBooking_WebAPI.Middleware
             {
                 await WriteProblem(context, 400, "Invalid Booking", ex.Message);
             }
+            catch(AuditoriumNotFoundException ex)
+            {
+                await WriteProblem(context, 404, "Auditorium Not Found", ex.Message);
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Unhandled exception");
